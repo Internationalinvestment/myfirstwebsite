@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MicroYield - USDT 5% in 30 Days</title>
+    <title>MicroYield - USDT 50% in 30 Days</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -1000,7 +1000,7 @@
         
         <header>
             <h1>MicroYield</h1>
-            <p>Earn 5% on your USDT in just 30 days</p>
+            <p>Earn 50% on your USDT in just 30 days</p>
         </header>
         
         <div class="stats-container">
@@ -1153,7 +1153,7 @@
                     <p><strong>Investment Details:</strong></p>
                     <p>Amount: <span id="displayAmount" class="highlight">5.00</span> USDT</p>
                     <p>Term: <span class="highlight">30 days</span></p>
-                    <p>Return: <span id="displayReturn" class="highlight">5.25</span> USDT (<span class="highlight">5%</span>)</p>
+                    <p>Return: <span id="displayReturn" class="highlight">7.50</span> USDT (<span class="highlight">50%</span>)</p>
                     <p>Maturity Date: <span id="displayMaturity" class="highlight">July 13, 2023</span></p>
                     <p>Payment Method: <span id="displayMethod" class="highlight">USDT</span></p>
                 </div>
@@ -1197,9 +1197,9 @@
                 </div>
                 
                 <div class="withdrawal-calculator">
-                    <p>You will receive: <span id="withdrawReceive">0.90</span> USDT</p>
-                    <p>Tax (10%): <span id="withdrawTax">0.10</span> USDT</p>
-                    <p class="tax-notice">10% tax fee applies to all withdrawals</p>
+                    <p>You will receive: <span id="withdrawReceive">0.85</span> USDT</p>
+                    <p>Tax (15%): <span id="withdrawTax">0.15</span> USDT</p>
+                    <p class="tax-notice">15% tax fee applies to all withdrawals</p>
                 </div>
                 
                 <div class="form-group">
@@ -1397,6 +1397,9 @@
         // Current withdrawal method
         let currentWithdrawMethod = 'gcash';
         
+        // Fixed exchange rate 1 USD = 50 PHP
+        const EXCHANGE_RATE = 50;
+        
         // Save users data to localStorage
         function saveUsersData() {
             localStorage.setItem('microyield_users', JSON.stringify(users));
@@ -1466,7 +1469,7 @@
                 transactions: [
                     {
                         id: Date.now() - 86400000,
-                        amount: 5.25,
+                        amount: 7.50,
                         description: 'Investment Returns',
                         date: new Date(Date.now() - 86400000).toISOString(),
                         status: 'completed'
@@ -1487,7 +1490,7 @@
                     }
                 ],
                 totalInvested: 15.00,
-                totalReturns: 5.25,
+                totalReturns: 7.50,
                 settings: {
                     twoFactorEnabled: false
                 },
@@ -1507,7 +1510,7 @@
                     walletAddress: users[demoEmail].wallet,
                     status: 'active',
                     paymentMethod: 'USDT',
-                    dailyEarnings: 0.05 // 0.5% daily
+                    dailyEarnings: 0.1667 // 1.67% daily (50% over 30 days)
                 });
             }
             
@@ -1523,7 +1526,7 @@
                     walletAddress: users[demoEmail].wallet,
                     status: 'completed',
                     paymentMethod: 'GCash',
-                    returnAmount: 5.25
+                    returnAmount: 7.50 // 50% return
                 });
             }
             
@@ -1603,7 +1606,7 @@
             earningsInterval = setInterval(calculateDailyEarnings, DAILY_EARNINGS_INTERVAL);
         }
         
-        // Calculate daily earnings from active investments
+        // Calculate daily earnings from active investments (1.67% daily for 50% in 30 days)
         function calculateDailyEarnings() {
             if (!currentUser) return;
             
@@ -1617,10 +1620,10 @@
             if (now - lastEarningsDate >= DAILY_EARNINGS_INTERVAL) {
                 let totalDailyEarnings = 0;
                 
-                // Calculate earnings for each active investment (0.5% daily)
+                // Calculate earnings for each active investment (1.67% daily for 50% in 30 days)
                 user.investments.forEach(investment => {
                     if (investment.status === 'active') {
-                        const dailyEarning = investment.amount * 0.005; // 0.5% daily
+                        const dailyEarning = investment.amount * 0.0167; // 1.67% daily
                         totalDailyEarnings += dailyEarning;
                         
                         // Add transaction for this investment's earnings
@@ -1969,17 +1972,17 @@
                 </div>`;
             
             const returnAmount = isHistory ? 
-                investment.returnAmount || (investment.amount * 1.05).toFixed(2) : 
-                (investment.amount * 1.05).toFixed(2);
+                investment.returnAmount || (investment.amount * 1.50).toFixed(2) : 
+                (investment.amount * 1.50).toFixed(2);
             
-            const dailyEarnings = investment.amount * 0.005; // 0.5% daily
+            const dailyEarnings = investment.amount * 0.0167; // 1.67% daily (50% over 30 days)
             
             item.innerHTML = `
                 <p>Amount: <span class="highlight">${investment.amount.toFixed(2)} USDT</span></p>
                 <p>Start Date: <span>${new Date(investment.startDate).toLocaleDateString()}</span></p>
                 <p>Maturity Date: <span>${new Date(investment.endDate).toLocaleDateString()}</span></p>
                 <p>Payment Method: <span>${investment.paymentMethod || 'USDT'}</span></p>
-                ${!isHistory ? `<p>Daily Earnings: <span class="highlight">${dailyEarnings.toFixed(4)} USDT</span> (0.5%)</p>` : ''}
+                ${!isHistory ? `<p>Daily Earnings: <span class="highlight">${dailyEarnings.toFixed(4)} USDT</span> (1.67%)</p>` : ''}
                 ${status}
                 <p>${isHistory ? 'Returned' : 'Expected Return'}: <span class="highlight">${returnAmount} USDT</span></p>
             `;
@@ -2019,8 +2022,8 @@
                 amountInput.value = amount.toFixed(2);
             }
             
-            const returnAmount = (amount * 1.05).toFixed(2);
-            const dailyEarnings = (amount * 0.005).toFixed(4); // 0.5% daily
+            const returnAmount = (amount * 1.50).toFixed(2); // 50% return
+            const dailyEarnings = (amount * 0.0167).toFixed(4); // 1.67% daily (50% over 30 days)
             
             // Update display
             document.getElementById('displayAmount').textContent = amount.toFixed(2);
@@ -2048,11 +2051,11 @@
             document.getElementById('dailyLimit').textContent = `$${remaining}`;
         }
         
-        // Update withdrawal calculation
+        // Update withdrawal calculation with 15% tax
         function updateWithdrawalCalc() {
             const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
-            const tax = (amount * 0.10).toFixed(2);
-            const receive = (amount * 0.90).toFixed(2);
+            const tax = (amount * 0.15).toFixed(2); // 15% tax
+            const receive = (amount * 0.85).toFixed(2); // 85% after tax
             
             document.getElementById('withdrawTax').textContent = tax;
             document.getElementById('withdrawReceive').textContent = receive;
@@ -2243,7 +2246,7 @@
                     walletAddress: useMethod === 'USDT' ? walletAddress : useMethod,
                     status: 'active',
                     paymentMethod: useMethod,
-                    dailyEarnings: amount * 0.005 // 0.5% daily
+                    dailyEarnings: amount * 0.0167 // 1.67% daily (50% over 30 days)
                 };
                 
                 // Add to user's investments
@@ -2527,9 +2530,9 @@
             
             // Simulate processing delay
             setTimeout(() => {
-                // Calculate amounts
-                const tax = amount * 0.10;
-                const receive = amount * 0.90;
+                // Calculate amounts with 15% tax
+                const tax = amount * 0.15;
+                const receive = amount * 0.85;
                 
                 // Create withdrawal (this will handle deducting from daily earnings first)
                 addTransaction(-amount, description, 'pending');
@@ -2605,7 +2608,7 @@
                             if (completedIndex !== -1) {
                                 const completed = user.investments.splice(completedIndex, 1)[0];
                                 completed.status = 'completed';
-                                completed.returnAmount = completed.amount * 1.05;
+                                completed.returnAmount = completed.amount * 1.50; // 50% return
                                 
                                 if (!user.history) {
                                     user.history = [];
