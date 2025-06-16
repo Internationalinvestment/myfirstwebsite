@@ -1504,6 +1504,7 @@
                 endDate.setDate(startDate.getDate() + 15); // 15 days remaining
                 
                 users[demoEmail].investments.push({
+                    id: Date.now(),
                     amount: 10.00,
                     startDate: startDate.getTime() - (15 * 86400000), // Started 15 days ago
                     endDate: endDate.getTime(),
@@ -1520,6 +1521,7 @@
                 const endDate = new Date(Date.now() - 5 * 86400000);
                 
                 users[demoEmail].history.push({
+                    id: Date.now(),
                     amount: 5.00,
                     startDate: startDate.getTime(),
                     endDate: endDate.getTime(),
@@ -1559,7 +1561,6 @@
                 
                 document.getElementById('userEmailText').textContent = currentUser.email;
                 document.getElementById('walletAddress').value = user.wallet || '';
-                document.getElementById('userGCashNumber').textContent = user.gcash || 'Not set';
                 document.getElementById('settingsEmail').value = currentUser.email;
                 document.getElementById('settingsGCash').value = user.gcash || '';
                 document.getElementById('settingsWallet').value = user.wallet || '';
@@ -2251,6 +2252,9 @@
                 
                 // Add to user's investments
                 const user = users[currentUser.email];
+                if (!user.investments) {
+                    user.investments = [];
+                }
                 user.investments.push(investment);
                 
                 // Update total invested
