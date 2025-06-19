@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
+            /* Default theme (mixed) */
             --primary: #4e44ce;
             --primary-dark: #3a32a8;
             --primary-light: #6a62d8;
@@ -26,7 +27,51 @@
             --border-radius: 8px;
             --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            
+            /* Background and text colors */
+            --bg-color: var(--darker);
+            --bg-secondary: var(--dark);
+            --text-color: var(--light);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --card-bg: rgba(26, 26, 46, 0.8);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --input-bg: rgba(15, 15, 26, 0.5);
+            --input-border: rgba(255, 255, 255, 0.1);
         }
+        
+        /* Light theme */
+        .theme-light {
+            --bg-color: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --text-color: #333333;
+            --text-secondary: rgba(0, 0, 0, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --input-border: rgba(0, 0, 0, 0.1);
+            
+            /* Adjust particle colors for light theme */
+            --particle-color: rgba(78, 68, 206, 0.2);
+            --particle-line: rgba(78, 68, 206, 0.1);
+        }
+        
+        /* Dark theme */
+        .theme-dark {
+            --bg-color: var(--darker);
+            --bg-secondary: var(--dark);
+            --text-color: var(--light);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --card-bg: rgba(26, 26, 46, 0.8);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --input-bg: rgba(15, 15, 26, 0.5);
+            --input-border: rgba(255, 255, 255, 0.1);
+            
+            /* Adjust particle colors for dark theme */
+            --particle-color: #4e44ce;
+            --particle-line: #4e44ce;
+        }
+        
+        /* Mixed theme (default) - uses original root variables */
         
         * {
             margin: 0;
@@ -36,29 +81,234 @@
         }
         
         body {
-            background-color: var(--light);
-            color: var(--dark);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* Theme switcher */
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--card-border);
+        }
+        
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            background: var(--bg-secondary);
+            color: var(--text-color);
+        }
+        
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .theme-btn.active {
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+        
+        /* Animated Background Elements */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+        }
+
+        /* Floating Circles Background */
+        .circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: var(--particle-color);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+
+        .circles li:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+        }
+
+        .circles li:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 12s;
+        }
+
+        .circles li:nth-child(3) {
+            left: 70%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 4s;
+        }
+
+        .circles li:nth-child(4) {
+            left: 40%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+
+        .circles li:nth-child(5) {
+            left: 65%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 0s;
+        }
+
+        .circles li:nth-child(6) {
+            left: 75%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 3s;
+        }
+
+        .circles li:nth-child(7) {
+            left: 35%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 7s;
+        }
+
+        .circles li:nth-child(8) {
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            animation-delay: 15s;
+            animation-duration: 45s;
+        }
+
+        .circles li:nth-child(9) {
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            animation-delay: 2s;
+            animation-duration: 35s;
+        }
+
+        .circles li:nth-child(10) {
+            left: 85%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 0s;
+            animation-duration: 11s;
+        }
+
+        @keyframes animate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 0;
+            }
+
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+        }
+
+        /* Glowing Border Effect */
+        .glow-border {
+            position: relative;
+            box-shadow: 0 0 10px rgba(78, 68, 206, 0.5);
+        }
+
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--primary));
+            background-size: 400%;
+            border-radius: var(--border-radius);
+            opacity: 0;
+            transition: 0.5s;
+            animation: glowing 20s linear infinite;
+        }
+
+        .glow-border:hover::before {
+            opacity: 0.7;
+        }
+
+        @keyframes glowing {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 400% 0;
+            }
+            100% {
+                background-position: 0 0;
+            }
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         header {
             text-align: center;
             margin-bottom: 30px;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--input-border);
         }
         
         header h1 {
-            color: var(--primary);
+            color: var(--text-color);
             margin-bottom: 10px;
             font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(78, 68, 206, 0.5);
         }
         
         header p {
@@ -67,20 +317,23 @@
         }
         
         .card {
-            background: white;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             padding: 25px;
             margin-bottom: 30px;
             transition: var(--transition);
+            border: 1px solid var(--card-border);
         }
         
         .card:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
         }
         
         .card h2 {
-            color: var(--primary);
+            color: var(--text-color);
             margin-bottom: 20px;
             font-size: 1.5rem;
             display: flex;
@@ -100,22 +353,25 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-color);
         }
         
         input, select, textarea {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--input-border);
             border-radius: var(--border-radius);
             font-size: 16px;
             transition: var(--transition);
+            background: var(--input-bg);
+            color: var(--text-color);
         }
         
         input:focus, select:focus, textarea:focus {
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(78, 68, 206, 0.2);
+            background: var(--input-bg);
         }
         
         button {
@@ -133,11 +389,29 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
         
         button:hover {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 68, 206, 0.4);
+        }
+        
+        button:hover::before {
+            left: 100%;
         }
         
         button:active {
@@ -145,7 +419,7 @@
         }
         
         button:disabled {
-            background-color: #cccccc;
+            background-color: #333344;
             cursor: not-allowed;
             transform: none;
         }
@@ -194,7 +468,7 @@
         }
         
         .investment-details {
-            background-color: var(--lighter);
+            background-color: var(--input-bg);
             padding: 20px;
             border-radius: var(--border-radius);
             margin-top: 25px;
@@ -208,24 +482,25 @@
         }
         
         .highlight {
-            color: var(--primary);
+            color: var(--primary-light);
             font-weight: 700;
         }
         
         .wallet-address {
             font-family: monospace;
-            background-color: var(--lighter);
+            background-color: var(--input-bg);
             padding: 12px;
             border-radius: var(--border-radius);
             word-break: break-all;
             font-size: 14px;
             margin-top: 10px;
+            color: var(--text-color);
         }
         
         #countdown {
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--primary-light);
             text-align: center;
             margin: 20px 0;
         }
@@ -235,13 +510,13 @@
         }
         
         .investment-item {
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--input-border);
             padding: 18px 0;
             transition: var(--transition);
         }
         
         .investment-item:hover {
-            background-color: var(--lighter);
+            background-color: rgba(78, 68, 206, 0.1);
             padding-left: 10px;
             padding-right: 10px;
             margin-left: -10px;
@@ -257,10 +532,11 @@
             display: flex;
             margin-bottom: 20px;
             overflow-x: auto;
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             padding: 5px;
+            border: 1px solid var(--card-border);
         }
         
         .tab {
@@ -273,7 +549,7 @@
             min-width: 120px;
             white-space: nowrap;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-color);
             transition: var(--transition);
             border-radius: calc(var(--border-radius) - 5px);
             display: flex;
@@ -305,6 +581,11 @@
             max-width: 500px;
             margin: 50px auto;
             animation: slideUp 0.5s ease;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
         }
         
         @keyframes slideUp {
@@ -319,8 +600,8 @@
         
         .auth-tab {
             padding: 15px 20px;
-            background: #eee;
-            border: 1px solid #ddd;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
             border-bottom: none;
             cursor: pointer;
             flex: 1;
@@ -328,18 +609,19 @@
             border-radius: var(--border-radius) var(--border-radius) 0 0;
             font-weight: 600;
             transition: var(--transition);
+            color: var(--text-color);
         }
         
         .auth-tab.active {
-            background: white;
-            border-bottom: 1px solid white;
-            color: var(--primary);
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--card-bg);
+            color: var(--primary-light);
         }
         
         .auth-content {
-            background: white;
+            background: var(--card-bg);
             padding: 30px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--input-border);
             border-radius: 0 var(--border-radius) var(--border-radius) var(--border-radius);
             box-shadow: var(--box-shadow);
         }
@@ -348,10 +630,11 @@
             text-align: center;
             margin-top: 20px;
             font-size: 0.95rem;
+            color: var(--text-secondary);
         }
         
         .form-footer a {
-            color: var(--primary);
+            color: var(--primary-light);
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
@@ -359,6 +642,7 @@
         
         .form-footer a:hover {
             text-decoration: underline;
+            color: var(--primary);
         }
         
         .user-menu {
@@ -373,7 +657,7 @@
         .user-email {
             margin-right: 5px;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--text-color);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -402,7 +686,7 @@
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background-color: var(--lighter);
+            background-color: rgba(40, 167, 69, 0.1);
             border-radius: var(--border-radius);
             border-left: 4px solid var(--success);
         }
@@ -414,7 +698,7 @@
             text-align: center;
             margin: 20px 0;
             padding: 15px;
-            background-color: var(--lighter);
+            background-color: rgba(23, 162, 184, 0.1);
             border-radius: var(--border-radius);
             border-left: 4px solid var(--info);
         }
@@ -424,7 +708,7 @@
             align-items: center;
             margin-bottom: 15px;
             padding: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--input-border);
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
@@ -432,12 +716,12 @@
         
         .payment-method:hover {
             border-color: var(--primary);
-            background-color: var(--lighter);
+            background-color: rgba(78, 68, 206, 0.1);
         }
         
         .payment-method.active {
             border-color: var(--primary);
-            background-color: rgba(78, 68, 206, 0.05);
+            background-color: rgba(78, 68, 206, 0.2);
         }
         
         .payment-method img {
@@ -455,10 +739,15 @@
         .payment-details strong {
             display: block;
             margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .payment-details p, .payment-details small {
+            color: var(--text-secondary);
         }
         
         .payment-instructions {
-            background-color: var(--lighter);
+            background-color: rgba(23, 162, 184, 0.1);
             padding: 20px;
             border-radius: var(--border-radius);
             margin-top: 20px;
@@ -467,10 +756,11 @@
         
         .payment-instructions p {
             margin-bottom: 10px;
+            color: var(--text-color);
         }
         
         .withdrawal-calculator {
-            background-color: var(--lighter);
+            background-color: rgba(53, 162, 235, 0.1);
             padding: 20px;
             border-radius: var(--border-radius);
             margin-top: 20px;
@@ -481,6 +771,7 @@
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
+            color: var(--text-color);
         }
         
         .tax-notice {
@@ -488,7 +779,7 @@
             font-weight: 600;
             margin-top: 15px;
             padding-top: 10px;
-            border-top: 1px dashed #ddd;
+            border-top: 1px dashed var(--input-border);
         }
         
         .transaction-history {
@@ -502,13 +793,13 @@
             display: flex;
             justify-content: space-between;
             padding: 15px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--input-border);
             align-items: center;
             transition: var(--transition);
         }
         
         .transaction-item:hover {
-            background-color: var(--lighter);
+            background-color: rgba(78, 68, 206, 0.1);
             padding-left: 10px;
             padding-right: 10px;
             margin-left: -10px;
@@ -541,18 +832,19 @@
         .transaction-title {
             font-weight: 600;
             margin-bottom: 5px;
+            color: var(--text-color);
         }
         
         .transaction-date {
             font-size: 0.85rem;
-            color: #666;
+            color: var(--text-secondary);
         }
         
         .transaction-status {
             font-size: 0.8rem;
             padding: 3px 8px;
             border-radius: 12px;
-            background-color: var(--lighter);
+            background-color: rgba(255, 255, 255, 0.1);
             display: inline-block;
             margin-top: 5px;
         }
@@ -573,7 +865,7 @@
         }
         
         .copy-btn {
-            background-color: var(--lighter);
+            background-color: rgba(255, 255, 255, 0.1);
             border: none;
             padding: 5px 10px;
             border-radius: var(--border-radius);
@@ -584,10 +876,11 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            color: var(--text-color);
         }
         
         .copy-btn:hover {
-            background-color: #e2e2e2;
+            background-color: rgba(255, 255, 255, 0.2);
         }
         
         .qr-code {
@@ -600,7 +893,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #ddd;
+            border: 1px solid var(--input-border);
         }
         
         .qr-code img {
@@ -610,7 +903,7 @@
         
         .progress-container {
             width: 100%;
-            background-color: #e0e0e0;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             margin: 15px 0;
             height: 10px;
@@ -632,26 +925,29 @@
         }
         
         .stat-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 20px;
             box-shadow: var(--box-shadow);
             text-align: center;
             transition: var(--transition);
+            border: 1px solid var(--card-border);
         }
         
         .stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
             margin: 10px 0;
+            color: var(--text-color);
         }
         
         .stat-label {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
         
@@ -684,8 +980,8 @@
         .tooltip .tooltiptext {
             visibility: hidden;
             width: 200px;
-            background-color: var(--dark);
-            color: #fff;
+            background-color: var(--bg-secondary);
+            color: var(--text-color);
             text-align: center;
             border-radius: var(--border-radius);
             padding: 10px;
@@ -708,7 +1004,7 @@
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: var(--dark) transparent transparent transparent;
+            border-color: var(--bg-secondary) transparent transparent transparent;
         }
         
         .tooltip:hover .tooltiptext {
@@ -775,6 +1071,7 @@
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             margin: 20px 0;
             font-size: 0.9rem;
+            color: var(--text-color);
         }
         
         .two-factor {
@@ -782,7 +1079,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px;
-            background-color: var(--lighter);
+            background-color: rgba(255, 255, 255, 0.05);
             border-radius: var(--border-radius);
             margin: 20px 0;
         }
@@ -805,7 +1102,7 @@
             align-items: center;
             margin-bottom: 15px;
             padding: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--input-border);
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
@@ -813,12 +1110,12 @@
         
         .withdraw-option:hover {
             border-color: var(--primary);
-            background-color: var(--lighter);
+            background-color: rgba(78, 68, 206, 0.1);
         }
         
         .withdraw-option.active {
             border-color: var(--primary);
-            background-color: rgba(78, 68, 206, 0.05);
+            background-color: rgba(78, 68, 206, 0.2);
         }
         
         .withdraw-option i {
@@ -834,6 +1131,119 @@
         .withdraw-option-details strong {
             display: block;
             margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        
+        .withdraw-option-details p, .withdraw-option-details small {
+            color: var(--text-secondary);
+        }
+        
+        .exchange-rate-banner {
+            background-color: rgba(53, 162, 235, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-color);
+        }
+        
+        .exchange-rate-banner i {
+            color: var(--secondary);
+        }
+        
+        .currency-converter {
+            background-color: rgba(78, 68, 206, 0.1);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .currency-converter p {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-color);
+        }
+        
+        /* Product Investment Styles */
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid var(--card-border);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-card.selected {
+            border-color: var(--primary);
+            background-color: rgba(78, 68, 206, 0.2);
+        }
+        
+        .product-card h3 {
+            color: var(--primary-light);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 15px 0;
+            color: var(--success);
+        }
+        
+        .product-term {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .product-return {
+            background-color: rgba(78, 68, 206, 0.1);
+            padding: 10px;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .product-features {
+            text-align: left;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .product-features li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .product-features i {
+            color: var(--success);
         }
         
         /* Responsive styles */
@@ -864,6 +1274,10 @@
             
             .auth-content {
                 padding: 20px;
+            }
+            
+            .products-container {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -905,6 +1319,34 @@
     </style>
 </head>
 <body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-btn active" onclick="setTheme('mixed')" title="Mixed Theme">
+            <i class="fas fa-adjust"></i>
+        </button>
+        <button class="theme-btn" onclick="setTheme('light')" title="Light Theme">
+            <i class="fas fa-sun"></i>
+        </button>
+        <button class="theme-btn" onclick="setTheme('dark')" title="Dark Theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+    
+    <!-- Animated Background Elements -->
+    <div id="particles-js"></div>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    
     <div id="notification" class="notification hidden">
         <i class="fas fa-check-circle"></i>
         <span id="notification-message">Operation successful</span>
@@ -947,7 +1389,7 @@
             <div class="form-group">
                 <label for="regPassword">Password</label>
                 <input type="password" id="regPassword" placeholder="••••••••">
-                <small style="display: block; margin-top: 5px; color: #666;">Minimum 8 characters with at least 1 number</small>
+                <small style="display: block; margin-top: 5px; color: var(--text-secondary);">Minimum 8 characters with at least 1 number</small>
             </div>
             <div class="form-group">
                 <label for="regConfirmPassword">Confirm Password</label>
@@ -959,7 +1401,7 @@
             </div>
             <div class="form-group">
                 <input type="checkbox" id="regTerms" style="width: auto; display: inline-block; margin-right: 10px;">
-                <label for="regTerms" style="display: inline-block; width: auto; font-weight: normal;">I agree to the <a href="#" onclick="showTerms()">Terms & Conditions</a></label>
+                <label for="regTerms" style="display: inline-block; width: auto; font-weight: normal; color: var(--text-secondary);">I agree to the <a href="#" onclick="showTerms()">Terms & Conditions</a></label>
             </div>
             <button onclick="register()" id="registerBtn">
                 <span id="registerBtnText">Register</span>
@@ -1051,16 +1493,27 @@
         
         <div id="invest" class="tab-content active">
             <div class="card">
-                <h2><i class="fas fa-coins"></i> New USDT Investment</h2>
+                <h2><i class="fas fa-coins"></i> Investment Products</h2>
+                
+                <div class="exchange-rate-banner">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Fixed Exchange Rate: 1 USD = 50 PHP (Philippine Peso)</span>
+                </div>
+                
+                <div class="products-container" id="investmentProducts">
+                    <!-- Products will be added here by JavaScript -->
+                </div>
                 
                 <div class="form-group">
-                    <label for="investmentAmount">Investment Amount (USDT)</label>
-                    <input type="number" id="investmentAmount" min="1" max="200" step="0.01" value="5.00">
-                    <small>Minimum: $1.00 | Maximum: $200.00</small>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="investmentProgress" style="width: 25%;"></div>
+                    <label>Selected Investment</label>
+                    <div id="selectedProductDisplay" class="investment-details" style="display: none;">
+                        <p><strong>Investment Details:</strong></p>
+                        <p>Product: <span id="displayProductName" class="highlight">None selected</span></p>
+                        <p>Amount: <span id="displayAmount" class="highlight">0.00</span> USDT (<span id="displayAmountPHP" class="highlight">₱0.00</span>)</p>
+                        <p>Term: <span id="displayTerm" class="highlight">0 days</span></p>
+                        <p>Return: <span id="displayReturn" class="highlight">0.00</span> USDT (<span id="displayReturnPHP" class="highlight">₱0.00</span>) - <span id="displayReturnPercent" class="highlight">0%</span></p>
+                        <p>Daily Earnings: <span id="displayDailyEarnings" class="highlight">0.00</span> USDT (<span id="displayDailyEarningsPHP" class="highlight">₱0.00</span>)</p>
                     </div>
-                    <small>Daily limit remaining: <span id="dailyLimit">$195.00</span></small>
                 </div>
                 
                 <div class="form-group">
@@ -1113,9 +1566,14 @@
                         <p>Send payment to:</p>
                         <p><strong>GCash Number:</strong> 09978014222</p>
                         <p><strong>Account Name:</strong> JE***D A.</p>
-                        <p>After payment, upload your receipt below:</p>
+                        <p>Click the button below to open GCash and send payment:</p>
+                        <button class="btn-success" onclick="openGCashApp()" id="gcashPayBtn">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Pay with GCash</span>
+                        </button>
+                        <p style="margin-top: 15px;">After payment, upload your receipt below:</p>
                         <input type="file" id="gcashReceipt" accept="image/*">
-                        <small style="display: block; margin-top: 5px;">Make sure the transaction details are visible</small>
+                        <small style="display: block; margin-top: 5px; color: var(--text-secondary);">Make sure the transaction details are visible</small>
                     </div>
                 </div>
                 
@@ -1126,7 +1584,7 @@
                         <p><strong>PayPal Email:</strong> investment772004@gmail.com</p>
                         <p>After payment, upload your receipt below:</p>
                         <input type="file" id="paypalReceipt" accept="image/*">
-                        <small style="display: block; margin-top: 5px;">Include transaction ID in notes</small>
+                        <small style="display: block; margin-top: 5px; color: var(--text-secondary);">Include transaction ID in notes</small>
                     </div>
                 </div>
                 
@@ -1139,24 +1597,15 @@
                         <p><strong>Account Number:</strong> 09978014222</p>
                         <p>After payment, upload your receipt below:</p>
                         <input type="file" id="bankReceipt" accept="image/*">
-                        <small style="display: block; margin-top: 5px;">Include reference number</small>
+                        <small style="display: block; margin-top: 5px; color: var(--text-secondary);">Include reference number</small>
                     </div>
                 </div>
                 
-                <button onclick="createInvestment()" id="investBtn">
+                <button onclick="createInvestment()" id="investBtn" disabled>
                     <i class="fas fa-lock"></i>
-                    <span id="investBtnText">Invest Now</span>
+                    <span id="investBtnText">Select a product to invest</span>
                     <span id="investSpinner" class="hidden loading"></span>
                 </button>
-                
-                <div class="investment-details">
-                    <p><strong>Investment Details:</strong></p>
-                    <p>Amount: <span id="displayAmount" class="highlight">5.00</span> USDT</p>
-                    <p>Term: <span class="highlight">30 days</span></p>
-                    <p>Return: <span id="displayReturn" class="highlight">7.50</span> USDT (<span class="highlight">50%</span>)</p>
-                    <p>Maturity Date: <span id="displayMaturity" class="highlight">July 13, 2023</span></p>
-                    <p>Payment Method: <span id="displayMethod" class="highlight">USDT</span></p>
-                </div>
             </div>
             
             <div class="card">
@@ -1171,7 +1620,7 @@
                 <div class="qr-code">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0x18a0174aa92B0aF6e5c10c684445C4c8Bdfe88E2" alt="QR Code">
                 </div>
-                <p style="text-align: center; font-size: 0.9rem; color: #666;">
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">
                     <i class="fas fa-sync-alt"></i> Address refreshes every 24 hours for security
                 </p>
             </div>
@@ -1181,24 +1630,29 @@
             <div class="card">
                 <h2><i class="fas fa-wallet"></i> My Wallet</h2>
                 
+                <div class="exchange-rate-banner">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Fixed Exchange Rate: 1 USD = 50 PHP (Philippine Peso)</span>
+                </div>
+                
                 <div class="wallet-balance">
-                    Balance: <span id="walletBalance">0.00</span> USDT
+                    Balance: <span id="walletBalance">0.00</span> USDT (<span id="walletBalancePHP">₱0.00</span>)
                 </div>
                 
                 <div class="daily-earnings">
-                    Daily Earnings: <span id="dailyEarningsAmount">0.00</span> USDT
-                    <small style="display: block; font-size: 0.9rem; margin-top: 5px;">Accumulated from active investments</small>
+                    Daily Earnings: <span id="dailyEarningsAmount">0.00</span> USDT (<span id="dailyEarningsAmountPHP">₱0.00</span>)
+                    <small style="display: block; font-size: 0.9rem; margin-top: 5px; color: var(--text-secondary);">Accumulated from active investments</small>
                 </div>
                 
                 <div class="form-group">
                     <label for="withdrawAmount">Withdrawal Amount (USDT)</label>
                     <input type="number" id="withdrawAmount" min="1" step="0.01" placeholder="1.00">
-                    <small>Minimum: $1.00 | Available: <span id="availableBalance">0.00</span> USDT</small>
+                    <small style="color: var(--text-secondary);">Minimum: $1.00 (₱50) | Available: <span id="availableBalance">0.00</span> USDT (<span id="availableBalancePHP">₱0.00</span>)</small>
                 </div>
                 
                 <div class="withdrawal-calculator">
-                    <p>You will receive: <span id="withdrawReceive">0.85</span> USDT</p>
-                    <p>Tax (15%): <span id="withdrawTax">0.15</span> USDT</p>
+                    <p>You will receive: <span id="withdrawReceive">0.85</span> USDT (<span id="withdrawReceivePHP">₱42.50</span>)</p>
+                    <p>Tax (15%): <span id="withdrawTax">0.15</span> USDT (<span id="withdrawTaxPHP">₱7.50</span>)</p>
                     <p class="tax-notice">15% tax fee applies to all withdrawals</p>
                 </div>
                 
@@ -1241,19 +1695,19 @@
                 <div class="form-group hidden" id="internalWithdrawDetails">
                     <label for="internalWalletEmail">Recipient's Email</label>
                     <input type="email" id="internalWalletEmail" placeholder="recipient@email.com">
-                    <small>Enter the email of the MicroYield user you're sending to</small>
+                    <small style="color: var(--text-secondary);">Enter the email of the MicroYield user you're sending to</small>
                 </div>
                 
                 <div class="form-group hidden" id="gcashWithdrawDetails">
                     <label>Your GCash Number</label>
                     <input type="text" id="gcashWithdrawNumber" placeholder="09xxxxxxxxx" value="">
-                    <small>Make sure this matches your registered GCash number</small>
+                    <small style="color: var(--text-secondary);">Make sure this matches your registered GCash number</small>
                 </div>
                 
                 <div class="form-group hidden" id="cryptoWithdrawDetails">
                     <label for="cryptoWalletAddress">Your Crypto Wallet Address</label>
                     <input type="text" id="cryptoWalletAddress" placeholder="0x... or T...">
-                    <small>Double-check the address before submitting</small>
+                    <small style="color: var(--text-secondary);">Double-check the address before submitting</small>
                 </div>
                 
                 <div class="form-group hidden" id="bankWithdrawDetails">
@@ -1379,15 +1833,129 @@
         </div>
     </div>
     
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Initialize particle.js background
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4e44ce"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4e44ce",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Load saved theme preference
+            const savedTheme = localStorage.getItem('theme') || 'mixed';
+            setTheme(savedTheme, true);
+        });
+
         // Enhanced User data storage with daily earnings
         let users = JSON.parse(localStorage.getItem('microyield_users')) || {};
         
         // Current user session with enhanced data
         let currentUser = null;
         
-        // Investment limits
-        const DAILY_INVESTMENT_LIMIT = 200;
+        // Investment limits - CHANGED TO 1000
+        const DAILY_INVESTMENT_LIMIT = 1000;
         let dailyInvestmentUsed = 0;
         
         // Daily earnings calculation interval (24 hours)
@@ -1399,6 +1967,140 @@
         
         // Fixed exchange rate 1 USD = 50 PHP
         const EXCHANGE_RATE = 50;
+        
+        // GCash payment details
+        const GCASH_NUMBER = '09978014222';
+        const GCASH_NAME = 'JE***D A.';
+        
+        // Currently selected investment product
+        let selectedProduct = null;
+        
+        // Investment products - UPDATED TO MATCH YOUR EXAMPLE
+        const investmentProducts = [
+            {
+                id: 'starter',
+                name: 'Starter Package',
+                amount: 10.00, // Changed from 5 to 10
+                term: 30,
+                returnPercent: 50,
+                features: [
+                    'Perfect for beginners',
+                    'Low risk investment',
+                    'Daily earnings: $0.50 (₱25)',
+                    'Total return: $15 (₱750) in 30 days',
+                    '24/7 support'
+                ]
+            },
+            {
+                id: 'standard',
+                name: 'Standard Package',
+                amount: 25.00,
+                term: 30,
+                returnPercent: 50,
+                features: [
+                    'Best value for money',
+                    'Daily earnings: $1.25 (₱62.50)',
+                    'Total return: $37.50 (₱1,875)',
+                    'Priority support',
+                    'Bonus 1% on referrals'
+                ]
+            },
+            {
+                id: 'premium',
+                name: 'Premium Package',
+                amount: 100.00,
+                term: 30,
+                returnPercent: 50,
+                features: [
+                    'High returns',
+                    'Daily earnings: $5.00 (₱250)',
+                    'Total return: $150 (₱7,500)',
+                    'VIP support',
+                    'Weekly reports',
+                    'Bonus 2% on referrals'
+                ]
+            },
+            {
+                id: 'elite',
+                name: 'Elite Package',
+                amount: 500.00,
+                term: 30,
+                returnPercent: 50,
+                features: [
+                    'Maximum returns',
+                    'Daily earnings: $25.00 (₱1,250)',
+                    'Total return: $750 (₱37,500)',
+                    'Dedicated account manager',
+                    'Daily reports',
+                    'Bonus 3% on referrals'
+                ]
+            },
+            {
+                id: 'custom',
+                name: 'Custom Investment',
+                amount: 0,
+                term: 30,
+                returnPercent: 50,
+                features: [
+                    'Choose your own amount',
+                    'Daily earnings: 5% of investment',
+                    'Total return: 50% in 30 days',
+                    'Flexible terms available',
+                    'Personalized support',
+                    'All features included'
+                ],
+                custom: true
+            }
+        ];
+        
+        // Set theme function
+        function setTheme(theme, initialLoad = false) {
+            // Remove all theme classes
+            document.body.classList.remove('theme-light', 'theme-dark');
+            
+            // Set the new theme
+            if (theme === 'light') {
+                document.body.classList.add('theme-light');
+                // Update particle colors for light theme
+                updateParticleColors('rgba(78, 68, 206, 0.2)', 'rgba(78, 68, 206, 0.1)');
+            } else if (theme === 'dark') {
+                document.body.classList.add('theme-dark');
+                // Update particle colors for dark theme
+                updateParticleColors('#4e44ce', '#4e44ce');
+            } else {
+                // Mixed theme (default)
+                // Update particle colors for mixed theme
+                updateParticleColors('#4e44ce', '#4e44ce');
+            }
+            
+            // Update active button in theme switcher
+            const themeBtns = document.querySelectorAll('.theme-btn');
+            themeBtns.forEach(btn => btn.classList.remove('active'));
+            
+            if (theme === 'light') {
+                document.querySelector('.theme-btn:nth-child(2)').classList.add('active');
+            } else if (theme === 'dark') {
+                document.querySelector('.theme-btn:nth-child(3)').classList.add('active');
+            } else {
+                document.querySelector('.theme-btn:nth-child(1)').classList.add('active');
+            }
+            
+            // Save theme preference if not initial load
+            if (!initialLoad) {
+                localStorage.setItem('theme', theme);
+                showNotification(`Theme changed to ${theme} mode`, 'success');
+            }
+        }
+        
+        // Update particle.js colors
+        function updateParticleColors(color, lineColor) {
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                const pJS = window.pJSDom[0].pJS;
+                pJS.particles.color.value = color;
+                pJS.particles.line_linked.color = lineColor;
+                pJS.fn.particlesRefresh();
+            }
+        }
         
         // Save users data to localStorage
         function saveUsersData() {
@@ -1412,6 +2114,64 @@
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 console.log('Current user saved to localStorage:', currentUser);
             }
+        }
+        
+        // Convert USD to PHP
+        function usdToPhp(amount) {
+            return (amount * EXCHANGE_RATE).toFixed(2);
+        }
+        
+        // Format PHP currency
+        function formatPhp(amount) {
+            return '₱' + parseFloat(amount).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        
+        // Open GCash app with payment details
+        function openGCashApp() {
+            if (!selectedProduct) {
+                showNotification('Please select an investment product first', 'error');
+                return;
+            }
+            
+            const amount = selectedProduct.custom ? 
+                parseFloat(document.getElementById('customAmount').value) || 0 : 
+                selectedProduct.amount;
+                
+            const phpAmount = usdToPhp(amount);
+            
+            // Create GCash deep link
+            const gcashLink = `gcash://pay?number=${GCASH_NUMBER}&name=${encodeURIComponent(GCASH_NAME)}&amount=${phpAmount}`;
+            
+            // Try to open GCash app
+            window.location.href = gcashLink;
+            
+            // Fallback to GCash web if app not installed
+            setTimeout(() => {
+                if (!document.hidden) {
+                    window.open(`https://www.gcash.com/pay-qr?qr=${encodeURIComponent(GCASH_NUMBER)}&amount=${phpAmount}`, '_blank');
+                }
+            }, 500);
+            
+            // Store payment attempt in local storage
+            const paymentAttempt = {
+                amount: amount,
+                phpAmount: phpAmount,
+                timestamp: new Date().getTime(),
+                status: 'pending'
+            };
+            
+            if (currentUser) {
+                const user = users[currentUser.email];
+                if (user) {
+                    if (!user.paymentAttempts) {
+                        user.paymentAttempts = [];
+                    }
+                    user.paymentAttempts.push(paymentAttempt);
+                    saveUsersData();
+                }
+            }
+            
+            showNotification('Opening GCash app to complete payment...', 'info');
         }
         
         // Check if user is logged in on page load
@@ -1430,9 +2190,8 @@
                 showAuth();
             }
             
-            // Initialize investment calculator
-            document.getElementById('investmentAmount').addEventListener('input', updateInvestmentCalc);
-            updateInvestmentCalc();
+            // Initialize investment products
+            loadInvestmentProducts();
             
             // Initialize withdrawal calculator
             document.getElementById('withdrawAmount').addEventListener('input', updateWithdrawalCalc);
@@ -1451,7 +2210,135 @@
             if (Object.keys(users).length === 0) {
                 initializeDemoData();
             }
+            
+            // Check for page visibility changes (to detect if GCash app opened successfully)
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    // User returned to the page, check if payment was made
+                    checkGCashPayment();
+                }
+            });
         });
+        
+        // Load investment products - UPDATED TO SHOW DAILY EARNINGS IN FEATURES
+        function loadInvestmentProducts() {
+            const container = document.getElementById('investmentProducts');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            investmentProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.id = `product-${product.id}`;
+                productCard.onclick = () => selectProduct(product);
+                
+                const returnAmount = product.amount * (product.returnPercent / 100);
+                const dailyEarnings = returnAmount / product.term;
+                
+                if (product.custom) {
+                    productCard.innerHTML = `
+                        <h3>${product.name}</h3>
+                        <div class="product-term">Customizable term</div>
+                        <div class="product-features">
+                            <ul>
+                                ${product.features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label for="customAmount">Amount (USDT)</label>
+                            <input type="number" id="customAmount" min="1" max="1000" step="0.01" placeholder="Enter amount">
+                            <small style="color: var(--text-secondary);">Minimum: $1.00 (₱50) | Maximum: $1000.00 (₱50,000)</small>
+                        </div>
+                        <div class="product-return">50% Return in 30 days</div>
+                    `;
+                } else {
+                    productCard.innerHTML = `
+                        <h3>${product.name}</h3>
+                        <div class="product-price">$${product.amount.toFixed(2)} <small>(${formatPhp(usdToPhp(product.amount))})</small></div>
+                        <div class="product-term">${product.term} days term</div>
+                        <div class="product-features">
+                            <ul>
+                                ${product.features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="product-return">${product.returnPercent}% Return ($${returnAmount.toFixed(2)})</div>
+                    `;
+                }
+                
+                container.appendChild(productCard);
+            });
+        }
+        
+        // Select investment product
+        function selectProduct(product) {
+            // Deselect all products
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select the clicked product
+            document.getElementById(`product-${product.id}`).classList.add('selected');
+            
+            selectedProduct = product;
+            
+            // Calculate values
+            let amount = product.amount;
+            if (product.custom) {
+                const customAmount = parseFloat(document.getElementById('customAmount').value) || 0;
+                amount = customAmount;
+                document.getElementById('customAmount').addEventListener('input', function() {
+                    updateProductDisplay(product);
+                });
+            }
+            
+            updateProductDisplay(product);
+            
+            // Enable invest button
+            document.getElementById('investBtn').disabled = false;
+            document.getElementById('investBtnText').textContent = `Invest in ${product.name}`;
+        }
+        
+        // Update product display (removed maturity date)
+        function updateProductDisplay(product) {
+            let amount = product.amount;
+            if (product.custom) {
+                amount = parseFloat(document.getElementById('customAmount').value) || 0;
+            }
+            
+            const returnAmount = amount * (product.returnPercent / 100);
+            const dailyEarnings = returnAmount / product.term;
+            
+            // Update display
+            document.getElementById('selectedProductDisplay').style.display = 'block';
+            document.getElementById('displayProductName').textContent = product.name;
+            document.getElementById('displayAmount').textContent = amount.toFixed(2);
+            document.getElementById('displayAmountPHP').textContent = formatPhp(usdToPhp(amount));
+            document.getElementById('displayTerm').textContent = product.term;
+            document.getElementById('displayReturn').textContent = returnAmount.toFixed(2);
+            document.getElementById('displayReturnPHP').textContent = formatPhp(usdToPhp(returnAmount));
+            document.getElementById('displayReturnPercent').textContent = `${product.returnPercent}%`;
+            document.getElementById('displayDailyEarnings').textContent = dailyEarnings.toFixed(4);
+            document.getElementById('displayDailyEarningsPHP').textContent = formatPhp(usdToPhp(dailyEarnings));
+        }
+        
+        // Check if GCash payment was completed
+        function checkGCashPayment() {
+            if (!currentUser) return;
+            
+            const user = users[currentUser.email];
+            if (!user || !user.paymentAttempts || user.paymentAttempts.length === 0) return;
+            
+            // Get the most recent payment attempt
+            const lastAttempt = user.paymentAttempts[user.paymentAttempts.length - 1];
+            
+            // Skip if already processed
+            if (lastAttempt.status !== 'pending') return;
+            
+            // In a real app, you would verify the payment with your backend
+            // For this demo, we'll simulate a successful payment after returning
+            showNotification('Please upload your GCash payment receipt to complete the investment', 'info');
+        }
         
         // Initialize demo data with daily earnings
         function initializeDemoData() {
@@ -1476,20 +2363,20 @@
                     },
                     {
                         id: Date.now() - 172800000,
-                        amount: -5.00,
+                        amount: -10.00, // Changed from -5 to -10 to match example
                         description: 'GCash Investment',
                         date: new Date(Date.now() - 172800000).toISOString(),
                         status: 'completed'
                     },
                     {
                         id: Date.now() - 86400000,
-                        amount: 0.25,
+                        amount: 0.50, // Changed from 0.25 to 0.50 to match example
                         description: 'Daily Earnings',
                         date: new Date(Date.now() - 86400000).toISOString(),
                         status: 'completed'
                     }
                 ],
-                totalInvested: 15.00,
+                totalInvested: 10.00, // Changed from 15 to 10 to match example
                 totalReturns: 7.50,
                 settings: {
                     twoFactorEnabled: false
@@ -1497,21 +2384,22 @@
                 lastEarningsDate: new Date().getTime()
             };
             
-            // Add a sample investment if none exists
+            // Add a sample investment if none exists - UPDATED TO MATCH YOUR EXAMPLE
             if (users[demoEmail].investments.length === 0) {
                 const startDate = new Date();
                 const endDate = new Date();
-                endDate.setDate(startDate.getDate() + 15); // 15 days remaining
+                endDate.setDate(startDate.getDate() + 30); // 30 days term
                 
                 users[demoEmail].investments.push({
                     id: Date.now(),
-                    amount: 10.00,
-                    startDate: startDate.getTime() - (15 * 86400000), // Started 15 days ago
+                    amount: 10.00, // $10 investment
+                    startDate: startDate.getTime(),
                     endDate: endDate.getTime(),
                     walletAddress: users[demoEmail].wallet,
                     status: 'active',
                     paymentMethod: 'USDT',
-                    dailyEarnings: 0.1667 // 1.67% daily (50% over 30 days)
+                    dailyEarnings: 0.50, // $0.50 daily (5% of $10)
+                    productName: 'Starter Package'
                 });
             }
             
@@ -1522,13 +2410,14 @@
                 
                 users[demoEmail].history.push({
                     id: Date.now(),
-                    amount: 5.00,
+                    amount: 10.00, // Changed from 5 to 10 to match example
                     startDate: startDate.getTime(),
                     endDate: endDate.getTime(),
                     walletAddress: users[demoEmail].wallet,
                     status: 'completed',
                     paymentMethod: 'GCash',
-                    returnAmount: 7.50 // 50% return
+                    returnAmount: 15.00, // 50% return (changed from 7.50 to 15)
+                    productName: 'Starter Package'
                 });
             }
             
@@ -1607,7 +2496,7 @@
             earningsInterval = setInterval(calculateDailyEarnings, DAILY_EARNINGS_INTERVAL);
         }
         
-        // Calculate daily earnings from active investments (1.67% daily for 50% in 30 days)
+        // Calculate daily earnings from active investments (5% daily for 50% in 30 days)
         function calculateDailyEarnings() {
             if (!currentUser) return;
             
@@ -1621,10 +2510,10 @@
             if (now - lastEarningsDate >= DAILY_EARNINGS_INTERVAL) {
                 let totalDailyEarnings = 0;
                 
-                // Calculate earnings for each active investment (1.67% daily for 50% in 30 days)
+                // Calculate earnings for each active investment (5% daily for 50% in 30 days)
                 user.investments.forEach(investment => {
                     if (investment.status === 'active') {
-                        const dailyEarning = investment.amount * 0.0167; // 1.67% daily
+                        const dailyEarning = investment.amount * 0.05; // 5% daily (changed from 1.67% to 5%)
                         totalDailyEarnings += dailyEarning;
                         
                         // Add transaction for this investment's earnings
@@ -1646,7 +2535,7 @@
                 
                 // Show notification if earnings were added
                 if (totalDailyEarnings > 0) {
-                    showNotification(`Daily earnings of $${totalDailyEarnings.toFixed(4)} added to your balance!`, 'success');
+                    showNotification(`Daily earnings of $${totalDailyEarnings.toFixed(4)} (${formatPhp(usdToPhp(totalDailyEarnings))}) added to your balance!`, 'success');
                 }
             }
         }
@@ -1666,6 +2555,7 @@
             // Update daily earnings display in wallet tab
             if (document.getElementById('dailyEarningsAmount')) {
                 document.getElementById('dailyEarningsAmount').textContent = user.dailyEarnings?.toFixed(4) || '0.0000';
+                document.getElementById('dailyEarningsAmountPHP').textContent = formatPhp(usdToPhp(user.dailyEarnings || 0));
             }
         }
         
@@ -1697,7 +2587,7 @@
         
         // Show terms and conditions
         function showTerms() {
-            alert('Terms & Conditions:\n\n1. This is a demo platform for educational purposes only.\n2. No real investments are being made.\n3. All data is stored locally in your browser.');
+            alert('Terms & Conditions:\n\n1. This is a demo platform for educational purposes only.\n2. No real investments are being made.\n3. All data is stored locally in your browser.\n4. Fixed exchange rate: 1 USD = 50 PHP');
         }
         
         // Register new user with enhanced validation
@@ -1976,16 +2866,17 @@
                 investment.returnAmount || (investment.amount * 1.50).toFixed(2) : 
                 (investment.amount * 1.50).toFixed(2);
             
-            const dailyEarnings = investment.amount * 0.0167; // 1.67% daily (50% over 30 days)
+            const dailyEarnings = investment.amount * 0.05; // 5% daily (50% over 30 days)
             
             item.innerHTML = `
-                <p>Amount: <span class="highlight">${investment.amount.toFixed(2)} USDT</span></p>
+                <p>Product: <span>${investment.productName || 'Custom Investment'}</span></p>
+                <p>Amount: <span class="highlight">${investment.amount.toFixed(2)} USDT (${formatPhp(usdToPhp(investment.amount))})</span></p>
                 <p>Start Date: <span>${new Date(investment.startDate).toLocaleDateString()}</span></p>
-                <p>Maturity Date: <span>${new Date(investment.endDate).toLocaleDateString()}</span></p>
+                <p>End Date: <span>${new Date(investment.endDate).toLocaleDateString()}</span></p>
                 <p>Payment Method: <span>${investment.paymentMethod || 'USDT'}</span></p>
-                ${!isHistory ? `<p>Daily Earnings: <span class="highlight">${dailyEarnings.toFixed(4)} USDT</span> (1.67%)</p>` : ''}
+                ${!isHistory ? `<p>Daily Earnings: <span class="highlight">${dailyEarnings.toFixed(4)} USDT (${formatPhp(usdToPhp(dailyEarnings))})</span> (5%)</p>` : ''}
                 ${status}
-                <p>${isHistory ? 'Returned' : 'Expected Return'}: <span class="highlight">${returnAmount} USDT</span></p>
+                <p>${isHistory ? 'Returned' : 'Expected Return'}: <span class="highlight">${returnAmount} USDT (${formatPhp(usdToPhp(returnAmount))})</span></p>
             `;
             
             return item;
@@ -1993,7 +2884,7 @@
         
         // Format countdown time with better readability
         function formatCountdown(ms) {
-            if (ms <= 0) return "<span style='color: var(--success)'>Matured</span>";
+            if (ms <= 0) return "<span style='color: var(--success)'>Completed</span>";
             
             const seconds = Math.floor(ms / 1000);
             const days = Math.floor(seconds / 86400);
@@ -2008,50 +2899,6 @@
             `;
         }
         
-        // Update displayed values when investment amount changes
-        function updateInvestmentCalc() {
-            const amountInput = document.getElementById('investmentAmount');
-            let amount = parseFloat(amountInput.value) || 0;
-            
-            // Enforce min and max
-            if (amount < 1) {
-                amount = 1.00;
-                amountInput.value = amount.toFixed(2);
-            }
-            if (amount > 200) {
-                amount = 200.00;
-                amountInput.value = amount.toFixed(2);
-            }
-            
-            const returnAmount = (amount * 1.50).toFixed(2); // 50% return
-            const dailyEarnings = (amount * 0.0167).toFixed(4); // 1.67% daily (50% over 30 days)
-            
-            // Update display
-            document.getElementById('displayAmount').textContent = amount.toFixed(2);
-            document.getElementById('displayReturn').textContent = returnAmount;
-            
-            // Update payment method display
-            const method = document.getElementById('gcashPayment').classList.contains('hidden') ? 
-                (document.getElementById('paypalPayment').classList.contains('hidden') ? 
-                    (document.getElementById('bankPayment').classList.contains('hidden') ? 'USDT' : 'Bank Transfer') : 'PayPal') : 'GCash';
-            document.getElementById('displayMethod').textContent = method;
-            
-            // Calculate maturity date (30 days from now)
-            const today = new Date();
-            const maturityDate = new Date(today);
-            maturityDate.setDate(today.getDate() + 30);
-            
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('displayMaturity').textContent = maturityDate.toLocaleDateString('en-US', options);
-            
-            // Update progress bar (demo of daily limit)
-            const progressPercent = (amount / 200) * 100;
-            document.getElementById('investmentProgress').style.width = `${progressPercent}%`;
-            
-            const remaining = (200 - amount).toFixed(2);
-            document.getElementById('dailyLimit').textContent = `$${remaining}`;
-        }
-        
         // Update withdrawal calculation with 15% tax
         function updateWithdrawalCalc() {
             const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
@@ -2059,13 +2906,16 @@
             const receive = (amount * 0.85).toFixed(2); // 85% after tax
             
             document.getElementById('withdrawTax').textContent = tax;
+            document.getElementById('withdrawTaxPHP').textContent = formatPhp(usdToPhp(tax));
             document.getElementById('withdrawReceive').textContent = receive;
+            document.getElementById('withdrawReceivePHP').textContent = formatPhp(usdToPhp(receive));
             
             // Update available balance
             if (currentUser && users[currentUser.email]) {
                 const user = users[currentUser.email];
                 const available = (user.balance + (user.dailyEarnings || 0)).toFixed(2);
                 document.getElementById('availableBalance').textContent = available;
+                document.getElementById('availableBalancePHP').textContent = formatPhp(usdToPhp(available));
             }
         }
         
@@ -2100,6 +2950,9 @@
                         updateTwoFactorStatus();
                     }
                 }
+            } else if (tabName === 'invest') {
+                // Refresh products display
+                loadInvestmentProducts();
             }
         }
         
@@ -2118,23 +2971,16 @@
             if (method === 'crypto') {
                 document.getElementById('cryptoMethod').classList.add('active');
                 document.getElementById('cryptoPayment').classList.remove('hidden');
-                document.getElementById('displayMethod').textContent = 'USDT';
             } else if (method === 'gcash') {
                 document.getElementById('gcashMethod').classList.add('active');
                 document.getElementById('gcashPayment').classList.remove('hidden');
-                document.getElementById('displayMethod').textContent = 'GCash';
             } else if (method === 'paypal') {
                 document.getElementById('paypalMethod').classList.add('active');
                 document.getElementById('paypalPayment').classList.remove('hidden');
-                document.getElementById('displayMethod').textContent = 'PayPal';
             } else if (method === 'bank') {
                 document.getElementById('bankMethod').classList.add('active');
                 document.getElementById('bankPayment').classList.remove('hidden');
-                document.getElementById('displayMethod').textContent = 'Bank Transfer';
             }
-            
-            // Update investment calculator
-            updateInvestmentCalc();
         }
         
         // Select withdrawal method
@@ -2166,20 +3012,29 @@
             currentWithdrawMethod = method;
         }
         
-        // Create investment function with enhanced validation
+        // Create investment function with enhanced validation - CHANGED MAX TO 1000
         function createInvestment() {
             if (!currentUser) {
                 showNotification('Please login first', 'error');
                 return;
             }
             
-            const amount = parseFloat(document.getElementById('investmentAmount').value);
-            const walletAddress = document.getElementById('walletAddress').value.trim();
-            
-            if (amount < 1 || amount > 200) {
-                showNotification('Investment amount must be between $1.00 and $200.00', 'error');
+            if (!selectedProduct) {
+                showNotification('Please select an investment product first', 'error');
                 return;
             }
+            
+            let amount = selectedProduct.amount;
+            if (selectedProduct.custom) {
+                amount = parseFloat(document.getElementById('customAmount').value) || 0;
+                
+                if (amount < 1 || amount > 1000) {
+                    showNotification('Investment amount must be between $1.00 (₱50) and $1000.00 (₱50,000)', 'error');
+                    return;
+                }
+            }
+            
+            const walletAddress = document.getElementById('walletAddress').value.trim();
             
             // Check payment method
             let useMethod = 'USDT';
@@ -2188,12 +3043,31 @@
             if (!document.getElementById('gcashPayment').classList.contains('hidden')) {
                 useMethod = 'GCash';
                 receiptElement = 'gcashReceipt';
+                
+                // Check if receipt was uploaded
+                const receipt = document.getElementById(receiptElement).files[0];
+                if (!receipt) {
+                    showNotification('Please upload your GCash payment receipt', 'error');
+                    return;
+                }
             } else if (!document.getElementById('paypalPayment').classList.contains('hidden')) {
                 useMethod = 'PayPal';
                 receiptElement = 'paypalReceipt';
+                
+                const receipt = document.getElementById(receiptElement).files[0];
+                if (!receipt) {
+                    showNotification('Please upload your PayPal payment receipt', 'error');
+                    return;
+                }
             } else if (!document.getElementById('bankPayment').classList.contains('hidden')) {
                 useMethod = 'Bank Transfer';
                 receiptElement = 'bankReceipt';
+                
+                const receipt = document.getElementById(receiptElement).files[0];
+                if (!receipt) {
+                    showNotification('Please upload your bank payment receipt', 'error');
+                    return;
+                }
             } else {
                 // Crypto payment
                 if (!walletAddress || walletAddress.length < 20) {
@@ -2217,37 +3091,23 @@
             
             // Simulate processing delay
             setTimeout(() => {
-                if (useMethod !== 'USDT') {
-                    const receipt = document.getElementById(receiptElement).files[0];
-                    if (!receipt) {
-                        showNotification(`Please upload your ${useMethod} payment receipt`, 'error');
-                        
-                        // Reset button state
-                        document.getElementById('investBtnText').classList.remove('hidden');
-                        document.getElementById('investSpinner').classList.add('hidden');
-                        document.getElementById('investBtn').disabled = false;
-                        return;
-                    }
-                    
-                    showNotification(`${useMethod} payment of $${amount.toFixed(2)} received! We will verify your payment shortly.`, 'success');
-                } else {
-                    showNotification(`Investment of ${amount.toFixed(2)} USDT created! Send your USDT to the provided address.`, 'success');
-                }
+                showNotification(`Investment of ${amount.toFixed(2)} USDT (${formatPhp(usdToPhp(amount))}) created! ${useMethod !== 'USDT' ? 'Payment received!' : 'Send your USDT to the provided address.'}`, 'success');
                 
                 // Create investment object
                 const startDate = new Date();
                 const endDate = new Date();
-                endDate.setDate(startDate.getDate() + 30);
+                endDate.setDate(startDate.getDate() + selectedProduct.term);
                 
                 const investment = {
                     id: Date.now(),
+                    productName: selectedProduct.name,
                     amount,
                     startDate: startDate.getTime(),
                     endDate: endDate.getTime(),
                     walletAddress: useMethod === 'USDT' ? walletAddress : useMethod,
                     status: 'active',
                     paymentMethod: useMethod,
-                    dailyEarnings: amount * 0.0167 // 1.67% daily (50% over 30 days)
+                    dailyEarnings: amount * 0.05 // 5% daily (changed from 1.67% to 5%)
                 };
                 
                 // Add to user's investments
@@ -2261,7 +3121,7 @@
                 user.totalInvested = (user.totalInvested || 0) + amount;
                 
                 // Add transaction
-                addTransaction(-amount, `${useMethod} Investment`);
+                addTransaction(-amount, `${useMethod} Investment (${selectedProduct.name})`);
                 
                 // Save updated data
                 saveUsersData();
@@ -2274,15 +3134,23 @@
                     document.getElementById(receiptElement).value = '';
                 }
                 
+                // Deselect product
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                selectedProduct = null;
+                document.getElementById('selectedProductDisplay').style.display = 'none';
+                
                 // Reload investments and wallet
                 loadUserInvestments();
                 updateWalletBalance();
                 updateStats();
                 
                 // Reset button state
+                document.getElementById('investBtnText').textContent = 'Select a product to invest';
                 document.getElementById('investBtnText').classList.remove('hidden');
                 document.getElementById('investSpinner').classList.add('hidden');
-                document.getElementById('investBtn').disabled = false;
+                document.getElementById('investBtn').disabled = true;
                 
                 // Switch to active investments tab
                 openTab('active');
@@ -2321,18 +3189,21 @@
             const balanceElement = document.getElementById('walletBalance');
             if (balanceElement) {
                 balanceElement.textContent = totalBalance.toFixed(4);
+                document.getElementById('walletBalancePHP').textContent = formatPhp(usdToPhp(totalBalance));
             }
             
             // Update available balance in withdrawal section
             const availableBalanceElement = document.getElementById('availableBalance');
             if (availableBalanceElement) {
                 availableBalanceElement.textContent = totalBalance.toFixed(4);
+                document.getElementById('availableBalancePHP').textContent = formatPhp(usdToPhp(totalBalance));
             }
             
             // Update daily earnings display
             const dailyEarningsElement = document.getElementById('dailyEarningsAmount');
             if (dailyEarningsElement) {
                 dailyEarningsElement.textContent = (user.dailyEarnings || 0).toFixed(4);
+                document.getElementById('dailyEarningsAmountPHP').textContent = formatPhp(usdToPhp(user.dailyEarnings || 0));
             }
         }
         
@@ -2446,7 +3317,7 @@
                         ${statusDisplay}
                     </div>
                     <div class="transaction-amount ${amountClass} ${statusClass}">
-                        ${transaction.amount > 0 ? '+' : ''}${transaction.amount.toFixed(4)} USDT
+                        ${transaction.amount > 0 ? '+' : ''}${transaction.amount.toFixed(4)} USDT (${formatPhp(usdToPhp(transaction.amount))})
                     </div>
                 `;
                 
@@ -2466,7 +3337,7 @@
             const user = users[currentUser.email];
             
             if (!amount || amount < 1) {
-                showNotification('Minimum withdrawal amount is $1.00', 'error');
+                showNotification('Minimum withdrawal amount is $1.00 (₱50)', 'error');
                 return;
             }
             
@@ -2541,10 +3412,9 @@
                 // Create withdrawal (this will handle deducting from daily earnings first)
                 addTransaction(-amount, description, 'pending');
                 
-                showNotification(`Withdrawal request for $${receive.toFixed(2)} (after tax) submitted! Processing may take up to 24 hours.`, 'success');
+                showNotification(`Withdrawal request for $${receive.toFixed(2)} (${formatPhp(usdToPhp(receive))}) (after tax) submitted! Processing may take up to 24 hours.`, 'success');
                 
-                // In a real app, this would be handled by the backend
-                // For demo, we'll mark it as completed after 24 hours
+                // Auto-approve after 24 hours
                 setTimeout(() => {
                     const transaction = user.transactions.find(t => 
                         t.description === description && t.status === 'pending');
@@ -2576,6 +3446,8 @@
                         
                         loadTransactionHistory();
                         updateWalletBalance();
+                        
+                        showNotification(`Withdrawal of $${receive.toFixed(2)} (${formatPhp(usdToPhp(receive))}) has been processed!`, 'success');
                     }
                 }, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
                 
@@ -2598,12 +3470,11 @@
                 const remaining = endTime - Date.now();
                 countdowns[i].innerHTML = formatCountdown(remaining);
                 
-                // Check if investment has matured
+                // Check if investment has completed
                 if (remaining <= 0 && !countdowns[i].classList.contains('completed')) {
                     countdowns[i].classList.add('completed');
                     
-                    // In a real app, this would trigger the payout
-                    // For demo, we'll just move it to history after 5 seconds
+                    // Move investment to history after completion
                     setTimeout(() => {
                         if (currentUser && users[currentUser.email]) {
                             const user = users[currentUser.email];
